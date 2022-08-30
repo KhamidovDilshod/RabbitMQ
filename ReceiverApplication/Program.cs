@@ -26,10 +26,12 @@ public static class Program
                 cfg.ReceiveEndpoint("produce", ep => ep.Consumer<Consumer>());
                 cfg.ReceiveEndpoint("publish", ep => ep.Consumer<Publisher>());
                 cfg.ReceiveEndpoint("send-get", ep => ep.Consumer<ReqResponse>());
+                cfg.ReceiveEndpoint("file", ep => ep.Consumer<FileConsumer>());
             }));
             x.AddConsumer<Consumer>();
             x.AddConsumer<Publisher>();
             x.AddConsumer<ReqResponse>();
+            x.AddConsumer<FileConsumer>();
         });
         var app = builder.Build();
 

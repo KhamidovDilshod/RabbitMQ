@@ -5,9 +5,9 @@ using MassTransit;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddMassTransit(x =>
 {
     x.SetKebabCaseEndpointNameFormatter();
@@ -17,7 +17,10 @@ builder.Services.AddMassTransit(x =>
     x.AddSagaStateMachines(assembly);
     x.AddSagas(assembly);
     x.AddActivities(assembly);
+    
     x.AddRequestClient<BalanceUpdate>();
+    x.AddRequestClient<FileProcess>();
+    
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host(new Uri("rabbitmq://localhost"), h =>
@@ -45,4 +48,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run(); 

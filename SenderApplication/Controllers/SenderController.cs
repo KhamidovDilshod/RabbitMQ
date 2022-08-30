@@ -10,9 +10,9 @@ namespace SenderApplication.Controllers;
 public class SenderController : ControllerBase
 {
     private readonly IBus _bus;
-    private readonly IRequestClient<BalanceUpdate> _client;
+    private readonly IRequestClient<FileProcess> _client;
 
-    public SenderController(IBus bus, IRequestClient<BalanceUpdate> client)
+    public SenderController(IBus bus, IRequestClient<FileProcess> client)
     {
         _bus = bus;
         _client = client;
@@ -55,7 +55,21 @@ public class SenderController : ControllerBase
             Amount = 100
         };
         var request = _client.Create(balanceRequest);
-        var response =await request.GetResponse<Balance>();
+        var response = await request.GetResponse<Balance>();
+        return Ok(response);
+    }
+
+    [HttpGet("file")]
+    public async Task<IActionResult> FileProcess()
+    {
+        var process = new FileProcess()
+        {
+            FileName = "null",
+            FilePath = "path",
+            IsSuccess = false
+        };
+        var request = _client.Create(process);
+        var response = await request.GetResponse<FileUpdate>();
         return Ok(response);
     }
 }

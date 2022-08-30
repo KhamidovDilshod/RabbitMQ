@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using ReceiverApplication.Entities;
 
-namespace ReceiverApplication;
+namespace ReceiverApplication.Consumers;
 
 public class Consumer : IConsumer<Product>
 {
@@ -9,6 +9,5 @@ public class Consumer : IConsumer<Product>
     {
         var product = context.Message;
         Console.WriteLine("adssds");
-        // await context.Publish<string>(new {context.Message});
     }
 }
